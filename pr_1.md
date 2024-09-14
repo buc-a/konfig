@@ -2,12 +2,10 @@
 ```bash
 cut -d: -f1 passwd | sort
 ```
-
 ##2
 ```bash
 $ sort -rnk2 /etc/protocols | head -5 | awk '{print $2,$1}`
 ```
-
 ##3
 ```bash
 #!/bin/bash
@@ -27,6 +25,11 @@ echo -n '-'
 done
 
 echo '-+'
+```
+##4
+```bash
+#!/bin/bash
+grep -o "[a-zA-Z_][a-zA-Z0-9]*" "$1" | sort -u
 ```
 ##5
 ```bash
@@ -48,7 +51,28 @@ echo "файл $file не содержит комментарий в перво�
 fi
 done
 ```
-
+##7
+```bash
+#!/bin/bash
+#files -  каталог для временного хранения файлов
+#заполняем его
+for file in "$1"/*
+do
+if [ -f "$file" ]; then
+cp "$file" files
+elif [ -d "$file" ]; then
+for file_2 in "$file"/*
+do
+if [ -f "$file_2" ]; then
+cp "$file_2" files
+fi
+done
+fi
+done
+find files -type f -exec md5sum {} + | sort | uniq -d --check-chars=32 | awk '{print $2}' | sed 's#.*/##'
+#очищаем каталог
+rm -f files/*
+```
 ##8
 ```bash
 #!/bin/bash
