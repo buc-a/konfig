@@ -28,7 +28,12 @@ done
 
 echo '-+'
 ```
-
+##5
+```bash
+!/bin/bash
+chmod +x "$1"
+sudo cp "$1" /usr/local/bin
+```
 ##6
 ```bash
 #!/bin/bash
@@ -55,4 +60,18 @@ tar cf $name *.$2
 ```bash
 #!/bin/bash
 cat $1 > $2 | sed "s/    /\t/g"
+```
+##10
+```bash
+#!/bin/bash
+for file in "$1"/*
+do
+if [ -f "$file" ]
+then
+        if [ ! -s "$file" ]
+        then
+        echo "$file"
+        fi
+fi
+done
 ```
