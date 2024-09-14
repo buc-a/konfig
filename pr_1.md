@@ -3,10 +3,13 @@
 cut -d: -f1 passwd | sort
 ```
 <image src="https://github.com/user-attachments/assets/d9eea1ba-353d-4025-a4f9-334e2f2b80c8">
+
 ##2
 ```bash
 $ sort -rnk2 /etc/protocols | head -5 | awk '{print $2,$1}`
 ```
+<image src="https://github.com/user-attachments/assets/4dfcdaba-b567-4fd2-9d3d-93035c785983">
+
 ##3
 ```bash
 #!/bin/bash
@@ -27,6 +30,8 @@ done
 
 echo '-+'
 ```
+<image src="https://github.com/user-attachments/assets/d684ea46-d96d-4aa3-9de7-72b732940d86">
+
 ##4
 ```bash
 #!/bin/bash
@@ -96,6 +101,8 @@ tar cf $name *.$2
 #!/bin/bash
 cat $1 > $2 | sed "s/    /\t/g"
 ```
+<image src="https://github.com/user-attachments/assets/a95a945b-ac01-4ee7-8ea8-0aa45b00a1ed">
+
 ##10
 ```bash
 #!/bin/bash
