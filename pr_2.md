@@ -43,3 +43,56 @@ output ["version menu: ",show(v_menu[number_menu]),"\n",
         "version dropdown: ",show(v_dropdowm[number_dropdowm]),"\n",
         "version icons: ",show(v_icons[number_icons]),"\n"];
 ```
+##3
+```bash
+int: k_foo = 2; 
+int: k_target = 2; 
+int: k_left = 1;
+int: k_right = 1; 
+int: k_shared = 2; 
+
+
+%вид записи версии
+type type_version = var tuple(int,int,int);
+
+%перечисление версий
+array[1..k_foo ] of type_version: v_foo = [(1,0,0),(1,1,0)];
+array[1..k_target] of type_version: v_target = [(1,0,0),(2,0,0)];
+array[1..k_left] of type_version: v_left = [(1,0,0)];
+array[1..k_right] of type_version: v_right = [(1,0,0)];
+array[1..k_shared] of type_version: v_shared = [(1,0,0),(2,0,0)];
+
+%какую версию из массива выбрать
+var 1..k_foo: n_foo;
+var 1..k_target: n_target;
+var 1..k_left: n_left;
+var 1..k_right: n_right;
+var 1..k_shared: n_shared;
+
+%перечисление условий
+
+%зависимости root
+constraint ( v_target[n_target].1 >= 2 /\ v_target[n_target].1<3 );
+constraint ( v_foo[n_foo].1>=1 \/ v_foo[n_foo].1<2);
+
+%зависимости foo 
+constraint (v_foo[n_foo] == (1,1,0)) -> ( (v_left[n_left].1>=1 /\ v_left[n_left].1<2) \/ (v_right[n_right].1>=1 /\ v_right[n_right].1<2));
+
+%зависимости left 
+constraint ( v_left[n_left]==(1,0,0) ) -> ( v_shared[n_shared].1 >= 1 );
+
+%зависимости right
+constraint ( v_right[n_right]==(1,0,0) ) -> ( v_shared[n_shared].1 < 2);
+
+%зависимости shared
+constraint ( v_shared[n_shared]==(1,0,0) ) -> ( v_target[n_target].1 < 2 /\ v_target[n_target].1 >= 1);
+
+solve maximize v_foo[n_foo].2;
+
+output ["version target: ",show(v_target [n_target]),"\n",
+        "version foo: ",show(v_foo[n_foo]),"\n",
+        "version left: ",show(v_left[n_left]),"\n",
+        "version right: ",show(v_right[n_right]),"\n",
+        "version sharget: ",show(v_target[n_target]),"\n"];
+```
+<image src="https://github.com/user-attachments/assets/b802d0bb-c1a9-41e3-b250-00e396f37cde">
