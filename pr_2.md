@@ -2,8 +2,30 @@
 ```bash
 apt show python3-matplotlib
 ```
+<image src="https://github.com/user-attachments/assets/6024e619-ce15-496c-95b4-80e87fcd021c">
 
-##2
+##4
+```bash
+include "alldifferent.mzn";
+
+var 0..9: one; 
+var 0..9: two;
+var 0..9: three;
+var 0..9: four;
+var 0..9: five;
+var 0..9: six;
+
+constraint (one + two + three) == (four + five + six);
+
+constraint all_different([one, two, three, four, five, six]);
+
+solve minimize( 100000*one + 10000*two + 1000*three + 100*four + 10*five + six);
+
+output [ show(one),show(two),show(three),show(four),show(five), show(six) ];
+```
+<image src="https://github.com/user-attachments/assets/197e6985-649e-4daa-bb77-8383483dc91f">
+
+##5
 ```bash
 int: k_menu = 6; %кол-во различных версий menu
 int: k_dropdowm = 5; %кол-во различных версий dropdown
@@ -43,7 +65,7 @@ output ["version menu: ",show(v_menu[number_menu]),"\n",
         "version dropdown: ",show(v_dropdowm[number_dropdowm]),"\n",
         "version icons: ",show(v_icons[number_icons]),"\n"];
 ```
-##3
+##6
 ```bash
 int: k_foo = 2; 
 int: k_target = 2; 
