@@ -4,6 +4,14 @@ apt show python3-matplotlib
 ```
 <image src="https://github.com/user-attachments/assets/6024e619-ce15-496c-95b4-80e87fcd021c">
 
+##2
+
+```bash
+npm show express
+```
+
+<image src="https://github.com/user-attachments/assets/4cd95b3f-587b-4b48-ad5e-8544ed73fab6">
+
 ##4
 ```bash
 include "alldifferent.mzn";
