@@ -1,18 +1,59 @@
-##1
+## 1
 ```bash
 apt show python3-matplotlib
 ```
 <image src="https://github.com/user-attachments/assets/6024e619-ce15-496c-95b4-80e87fcd021c">
 
-##2
+Получение пакета из репозитория
 
+```bash
+git clone https://github.com/matplotlib/matplotlib.git
+cd matplotlib
+pip install .      
+```
+
+## 2
 ```bash
 npm show express
 ```
 
 <image src="https://github.com/user-attachments/assets/4cd95b3f-587b-4b48-ad5e-8544ed73fab6">
 
-##4
+Получение пакета из репозитория
+```bash
+git clone https://github.com/expressjs/express.git
+cd express
+npm install
+```
+## 3
+### для matplotlib
+Формирование dot файла 
+```bash
+echo "$(pipdeptree -p matplotlib --graph-output dot)" > matplot_deps.dot
+```
+<image src="https://github.com/user-attachments/assets/0ac6d7f4-5b7a-437a-9cac-21eeee158a73">
+
+формирование png файла 
+```bash
+dot -Tpng matplot_deps.dot -o matplot_deps.png
+```
+<image src="https://github.com/user-attachments/assets/dee8bab5-6d2e-4aea-b947-eebe15259373">
+
+### для express
+Формирование dot файла 
+```bash
+npm ls -a --json | jq '{name: .name, dependencies: {express: .dependencies.express}}' | npm2dot > expresso_deps.dot
+```
+<image src="https://github.com/user-attachments/assets/9402a1f3-d20c-4b07-852e-abf1f673637a">
+
+формирование png файла 
+```bash
+dot -Tpng expresso_deps.dot -o expresso_deps.png
+```
+<image src="https://github.com/user-attachments/assets/dc51809a-3ea3-4b58-9602-8d89aefc8c92">
+
+
+## 4
 ```bash
 include "alldifferent.mzn";
 
@@ -33,7 +74,7 @@ output [ show(one),show(two),show(three),show(four),show(five), show(six) ];
 ```
 <image src="https://github.com/user-attachments/assets/197e6985-649e-4daa-bb77-8383483dc91f">
 
-##5
+## 5
 ```bash
 int: k_menu = 6; %кол-во различных версий menu
 int: k_dropdowm = 5; %кол-во различных версий dropdown
@@ -73,7 +114,7 @@ output ["version menu: ",show(v_menu[number_menu]),"\n",
         "version dropdown: ",show(v_dropdowm[number_dropdowm]),"\n",
         "version icons: ",show(v_icons[number_icons]),"\n"];
 ```
-##6
+## 6
 ```bash
 int: k_foo = 2; 
 int: k_target = 2; 
