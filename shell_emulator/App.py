@@ -45,20 +45,21 @@ class App:
         cmd = self._command_input.get(self._index.to_str(), tk.END)[:-2]
         args = cmd.split()
 
-        if args[0] == "ls":
-            self._print(self.ls(args[1:]))
-        elif args[0] == "cd":
-            self._print(self.cd(args[1:]))
-        elif args[0] == "exit":
-            self.exit()
-        elif args[0] == "cp":
-            self.cp(args[1:])
-        elif args[0] == "history":
-            self._print(self.history())
-        elif args[0] == "uniq":
-            self.uniq(args[1:])
-        else:
-            self._print("Неизвестная команда\n")
+        if ( len(args) > 0):
+            if args[0] == "ls":
+                self._print(self.ls(args[1:]))
+            elif args[0] == "cd":
+                self._print(self.cd(args[1:]))
+            elif args[0] == "exit":
+                self.exit()
+            elif args[0] == "cp":
+                self._print(self.cp(args[1:]))
+            elif args[0] == "history":
+                self._print(self.history())
+            elif args[0] == "uniq":
+                self._print(self.uniq(args[1:]))
+            else:
+                self._print("Неизвестная команда\n")
 
         self._command_history.append(cmd)
         self._history_index = len(self._command_history)
@@ -99,7 +100,7 @@ class App:
 
             list = set()
             for name in archive.namelist():
-                print(name)
+
                 if name.startswith(path):
                     if path == '':
                         ls_name = name
@@ -110,11 +111,30 @@ class App:
                     if '/' in ls_name:
                         ls_name = ls_name[:ls_name.index('/')]
 
+
                     list.add(ls_name)
 
             for name in list:
                 result += name + '\n'
+
         return result
+
+    def isDir(self, str_path) :
+        with zipfile.ZipFile(self._path, 'a') as zip_write:
+            if str_path[-1] == '/':
+                return 1
+            else:
+                fl = 0
+                for name in zip_write.namelist():
+                    if name.startswith(str_path):
+                        fl = 1
+                        if len(name) > len(str_path) and name[len(str_path)]=='/':
+                            return 1
+                if fl == 0:
+                    return -1
+
+        return 0
+
 
     def cd(self, args):
         if len(args) > 0:
@@ -143,12 +163,12 @@ class App:
                 with zipfile.ZipFile(self._path) as zip_ref:
 
                     for name in zip_ref.namelist():
-                        if name.startswith(path) and name[len(path)] == '/':
+                        if name.startswith(path) and len(name) > len(path) and name[len(path)] == '/':
                             self._current_dir = path
                             self._index.add_column(2 + len(self._current_dir + self._hostname))
                             return ''
 
-                return "Некорректный путь\n"
+                    return "Некорректный путь\n"
         return ''
 
 
@@ -157,8 +177,7 @@ class App:
     def cp(self, args):
         
         if len(args) < 2:
-            self._print("Недостаточно аргументов\n")
-            return
+            return "Недостаточно аргументов\n"
 
         if args[0][0] != '/':
             args[0] = os.path.join(self._current_dir, args[0])
@@ -175,18 +194,15 @@ class App:
                 if names == source_path:
                     fl = 1
             if fl == 0:
-                self._print(f'{source_path} - не существует такого файла\n')
-                return
+                return (f'{source_path} - не существует такого файла\n')
 
             with zip_read.open(source_path) as file:
                 data = file.read()
 
 
         with zipfile.ZipFile(self._path, 'a') as zip_write:
-
-            if destination_path[-1] == '/':
+            if self.isDir(destination_path) == 1:
                 destination_path = os.path.join(destination_path,os.path.basename(source_path))
-
             zip_write.writestr(destination_path, data)
 
     def history(self):
@@ -201,16 +217,13 @@ class App:
 
     def uniq(self, args):
         if len(args) == 0:
-            self._print("Необходимо указать файл\n")
-            return
+            return "Необходимо указать файл\n"
 
-        file_path = os.path.join(self._current_dir, args[0])[1:]
+        file_path = os.path.join(self._current_dir, args[0]).lstrip('/')
 
         with zipfile.ZipFile(self._path, 'r') as zip_ref:
-
             if file_path not in zip_ref.namelist():
-                self._print(f"Файл {file_path} не найден\n")
-                return
+                return f"Файл {file_path} не найден\n"
 
             uniq_lines = []
             with zip_ref.open(file_path, 'r') as file:
@@ -221,9 +234,11 @@ class App:
                     if line not in uniq_lines:
                         uniq_lines.append(line)
 
-
+        result = ''
         for line in uniq_lines:
-            self._print(line.decode('utf-8')+'\n')
+            result += line.decode('utf-8')+'\n'
+
+        return result
 
 
     def exit(self):
