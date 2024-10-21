@@ -23,6 +23,10 @@ class MyTestCase(unittest.TestCase):
     def test_ls_3(self):
         self.assertIn("file1.txt", self.emulator.ls(['directory1']), "ls_test_3")
 
+    def test_history_2(self):
+        self.assertIn("ls /", self.emulator.history())
+        self.assertIn("ls", self.emulator.history())
+        self.assertIn("ls directory1", self.emulator.history())
 
     def test_cd_1(self):
         self.assertIn("Некорректный путь", self.emulator.cd('..'), "cd_test_1")
