@@ -40,6 +40,27 @@ git checkout 368c81f
 <image src="https://github.com/user-attachments/assets/273f9bd4-178f-45de-8425-eb98ad9751d6">
 <image src="https://github.com/user-attachments/assets/9c55b739-e842-42e1-a79c-607692358300">
 
+## Задание 4
+```python
+from os import listdir
+from subprocess import call
+
+if __name__ == '__main__':
+    path = ".git/objects"
+    lst = listdir(path)
+    for dr in lst:
+
+        if dr != 'info' and dr != 'pack':
+            sum = listdir(f'{path}/{dr}')[0]
+            file = dr + sum
+            print(sum)
+            call(['git', 'cat-file', '-p', file])
+            print()
+```
+
+<image src="https://github.com/user-attachments/assets/004cf9f4-0792-4ed8-aee9-14a67a3ee388">
+
+
 
 
 
