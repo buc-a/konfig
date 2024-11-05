@@ -57,12 +57,7 @@ if __name__ == '__main__':
             call(['git', 'cat-file', '-p', file])
             print()
 ```
-
-<image src="https://github.com/user-attachments/assets/004cf9f4-0792-4ed8-aee9-14a67a3ee388">
-
-
-
-
+<image src="https://github.com/user-attachments/assets/018df202-9383-4b6c-a377-0225399c7ca7">
 
 
 
