@@ -1,6 +1,8 @@
 ### Содержание
 [- ДЗ1](https://github.com/buc-a/konfig/tree/main/shell_emulator)
 
+[- ДЗ2](https://github.com/buc-a/konfig/tree/main/visualizer)
+
 [-практика 1](https://github.com/buc-a/konfig/blob/main/pr_1.md)
 
 [-практика 2](https://github.com/buc-a/konfig/blob/main/pr_2.md)
