@@ -27,13 +27,13 @@ class TestDependencyGraph(unittest.TestCase):
     def test_visualize_text(self):
         import os
         graph = DependencyGraph("react", max_depth=1)
-        graph.visualize("C:\\Users\\Ангелина\\plantuml.jar", "graph.png")
+        graph.visualize(".\\plantuml.jar", "graph.png")
         self.assertTrue(not os.path.exists("graph.puml"))
 
     def test_visualize_png(self):
         import os
         graph = DependencyGraph("react", max_depth=1)
-        graph.visualize("C:\\Users\\Ангелина\\plantuml.jar", "graph.png")
+        graph.visualize(".\\plantuml.jar", "graph.png")
         self.assertTrue(os.path.exists("graph.png"))
 
 
