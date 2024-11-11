@@ -14,6 +14,7 @@ class DependencyGraph:
         dependencies = self._get_dependencies(self.package_name, 0, set())
         return dependencies
 
+
     def _get_dependencies(self, package: str, current_depth: int, visited: Set[str]) -> Dict[str, Set[str]]:
 
         if current_depth > self.max_depth:
@@ -53,6 +54,7 @@ class DependencyGraph:
         os.remove(file_name)
 
 
+
     def _generate_plantuml_code(self) -> str:
 
         self.dependencies = self.get_dependencies()
@@ -67,6 +69,7 @@ class DependencyGraph:
 
 def main():
     import argparse
+    import os.path
 
     parser = argparse.ArgumentParser(description="Визуализатор графа зависимостей npm-пакетов.")
     parser.add_argument("plantuml_path", help="Путь к исполняемому файлу PlantUML.")
@@ -78,11 +81,20 @@ def main():
 
     args = parser.parse_args()
 
+    if (not os.path.exists(args.plantuml_path) or
+            (len(args.output_path.split("\\")) > 1 and not os.path.exists("\\".join(args.output_path.split("\\")[0:-1]))) or
+            args.plantuml_path.split('.')[-1] != "jar" or
+            args.output_path.split('.')[-1] != "png"):
+
+        print("Неверные аргументы")
+        exit()
+
     graph = DependencyGraph(args.package_name, args.max_depth)
 
     graph.visualize(args.plantuml_path, args.output_path)
 
     print(f"Граф зависимостей для пакета '{args.package_name}' сохранен в '{args.output_path}'.")
+
 
 if __name__ == "__main__":
     main()
